@@ -19,6 +19,37 @@ export default{
                     reject(err);
                 });
         });
+    },
+    getAllColleges: function(){
+        var ax = axios.create({
+            baseURL: "http://localhost:9090",
+        }); 
+        return new Promise((resolve, reject) => {
+            ax({
+                method: 'get',
+                url: '/college/getAll',
+            }).then((response) => {                 
+                resolve(response);
+            }).catch((err) => {
+                reject(err);
+            });
+        });                       
+        
+    },
+    deleteCollege: function(id){
+        var ax = axios.create({
+            baseURL: "http://localhost:9090",
+        }); 
+        return new Promise((resolve, reject) => {
+            ax({
+                method: 'get',
+                url: '/college/delete/' + id,
+            }).then((response) => {                     
+                resolve(response);
+            }).catch((err) => {
+                reject(err);
+            });
+        });             
     }
     
 }

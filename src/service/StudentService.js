@@ -19,6 +19,22 @@ export default{
                     reject(err);
                 });
         });
+    },
+    getAllStudents: function(){
+        var ax = axios.create({
+            baseURL: "http://localhost:9090",
+        }); 
+        return new Promise((resolve, reject) => {
+            ax({
+                method: 'get',
+                url: '/student/getAll',
+            }).then((response) => {                 
+                resolve(response);
+            }).catch((err) => {
+                reject(err);
+            });
+        });                       
+        
     }
     
 }
