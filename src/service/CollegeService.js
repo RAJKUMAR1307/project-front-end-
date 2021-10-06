@@ -50,6 +50,63 @@ export default{
                 reject(err);
             });
         });             
-    }
+    },
+    getCollege: function(id){
+        var ax = axios.create({
+            baseURL: "http://localhost:9090",
+        }); 
+        return new Promise((resolve, reject) => {
+            ax({
+                method: 'get',
+                url: '/college/get/' + id,
+            }).then((response) => {                     
+                resolve(response);
+            }).catch((err) => {
+                reject(err);
+            });
+        });             
+    },
+    updateCollege: function(college){
+        var ax = axios.create({
+            baseURL: "http://localhost:9090",
+        });
+        let config = {
+            headers: {
+                "Content-Type": "application/json"
+            }
+        };
+        return new Promise((resolve, reject) => {
+            ax
+                .post("/college/update", college, config)
+                .then(response => {
+                    resolve(response);
+                })
+                .catch(err => {
+                    reject(err);
+                });
+        }); 
+    },
+    findByUsernameAndPassword: function(){
+        var ax = axios.create({
+            baseURL: "http://localhost:9090",
+        }); 
+        let config = {
+        headers: {
+         "Content-Type": "application/json"
+            }
+        };
+        
+        return new Promise((resolve, reject) => {
+            ax
+               .post("/college/user", this.clg, config)
+               .then(response => {
+                    resolve(response);
+                })
+                .catch(err => {
+                    reject(err);
+                });
+       
+        });
+    }           
     
 }

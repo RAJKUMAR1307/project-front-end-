@@ -107,6 +107,7 @@ export default {
         return new Promise((resolve, reject) => {
             StudentService.putStudent(this.student)
                 .then(response => {
+                alert ("student registered successfully!!!!!"); 
                     this.student.firstName ="";
                     this.student.lastName ="";
                     this.student.username ="";

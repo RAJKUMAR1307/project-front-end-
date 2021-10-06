@@ -22,6 +22,7 @@
                   <b-col>E-mail</b-col>
                   <b-col>Address</b-col>
                   <b-col>College</b-col>
+                  <b-col>Action</b-col>
                 </b-row>
             </b-thead>
             <b-tbody>
@@ -33,7 +34,12 @@
                   <b-col>{{s.mobileNumber}}</b-col>
                   <b-col>{{s.email}}</b-col>  
                   <b-col>{{s.address}}</b-col>  
-                  <b-col>{{s.collegeselected}}</b-col>           
+                  <b-col>{{s.collegeselected}}</b-col>
+                  <b-col>
+                    <span><b-icon icon="pencil-fill" aria-hidden="true" ></b-icon></span>
+                    <span> / </span>
+                    <span><b-icon icon="trash-fill" aria-hidden="true" @click="deleteStudent(s.id)"></b-icon></span>                
+                </b-col>             
                 </b-row>     
               </b-tbody>
          </b-table-simple>
@@ -74,14 +80,29 @@
         getAllStudents: function(){
             return new Promise((resolve, reject) => {
                 StudentService.getAllStudents()
-                .then((response) => {    
+                .then((response) => {                       
                     this.students = response.data;             
                     resolve(response);
                 }).catch((err) => {
                     reject(err);
                 });
             });              
+        },
+        deleteStudent: function(id){
+            return new Promise((resolve, reject) => {
+                StudentService.deleteStudent(id)
+                .then((response) => { 
+                    alert ("students deleted successfully!!!!!");   
+                    this.students = response.data; 
+                    this.getAllStudents();            
+                    resolve(response);
+                }).catch((err) => {
+                    reject(err);
+                });
+            });              
         }
+        
+        
     }
   }
 

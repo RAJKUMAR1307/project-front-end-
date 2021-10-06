@@ -7,6 +7,10 @@ import adminLogin from '../components/adminlogin'
 import ApproveInstitute from '../components/Approveinstitute'
 import deleteIns from '../components/deleteins'
 import ViewStudents from '../components/Viewstudents'
+import collegeLogin from '../components/collegelogin'
+import uploadArticles from '../components/uploadarticles'
+import facultyManagement from '../components/facultymanagement'
+import studentLogin from '../components/studentlogin'
 
 Vue.use(VueRouter)
 const routes = [   
@@ -44,6 +48,26 @@ const routes = [
                 path: '/adminlogin/Viewstudents',
                 name: 'Viewstudents',
                 component: ViewStudents
+        }, 
+        {
+                path: '/collegelogin',
+                name: 'collegelogin',
+                component: collegeLogin
+        }, 
+        {
+                path: '/collegelogin/uploadarticles',
+                name: 'uploadarticles',
+                component: uploadArticles
+        }, 
+        {
+                path: '/collegelogin/facultymanagement',
+                name: 'facultymanagement',
+                component: facultyManagement
+        }, 
+        {
+                path: '/studentlogin',
+                name: 'studentlogin',
+                component: studentLogin
         }, 
         
                
