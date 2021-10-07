@@ -1,6 +1,6 @@
 import axios from 'axios';
 export default{
-    putStudent: function(student){
+    putFaculty: function(faculty){
         var ax = axios.create({
             baseURL: "http://localhost:9090",
         });
@@ -11,7 +11,7 @@ export default{
         };
         return new Promise((resolve, reject) => {
             ax
-                .post("/student/insert", student, config)
+                .post("/faculty/insert", faculty, config)
                 .then(response => {
                     resolve(response);
                 })
@@ -20,29 +20,14 @@ export default{
                 });
         });
     },
-    getAllStudents: function(){
+    getFaculty: function(id){
         var ax = axios.create({
             baseURL: "http://localhost:9090",
         }); 
         return new Promise((resolve, reject) => {
             ax({
                 method: 'get',
-                url: '/student/getAll',
-            }).then((response) => {                 
-                resolve(response);
-            }).catch((err) => {
-                reject(err);
-            });
-        });                           
-    },
-     deleteStudent: function(id){
-        var ax = axios.create({
-            baseURL: "http://localhost:9090",
-        }); 
-        return new Promise((resolve, reject) => {
-            ax({
-                method: 'get',
-                url: '/student/delete/' + id,
+                url: '/faculty/get/' + id,
             }).then((response) => {                     
                 resolve(response);
             }).catch((err) => {
@@ -50,22 +35,7 @@ export default{
             });
         });             
     },
-    getStudent: function(id){
-        var ax = axios.create({
-            baseURL: "http://localhost:9090",
-        }); 
-        return new Promise((resolve, reject) => {
-            ax({
-                method: 'get',
-                url: '/student/get/' + id,
-            }).then((response) => {                     
-                resolve(response);
-            }).catch((err) => {
-                reject(err);
-            });
-        });             
-    },
-    updateStudent: function(student){
+    updateFaculty: function(faculty){
         var ax = axios.create({
             baseURL: "http://localhost:9090",
         });
@@ -76,7 +46,7 @@ export default{
         };
         return new Promise((resolve, reject) => {
             ax
-                .post("/student/update", student, config)
+                .post("/faculty/update", faculty, config)
                 .then(response => {
                     resolve(response);
                 })
@@ -84,5 +54,5 @@ export default{
                     reject(err);
                 });
         }); 
-    }
-}
+    },
+ }   

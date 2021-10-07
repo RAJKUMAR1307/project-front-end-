@@ -6,50 +6,104 @@
        </div>
        
        <div>           
-           <h1>Students List</h1>
+          <h1>Student Information</h1>
        </div>
        
        
        <b-container>
-          <b-table-simple class="table table-striped table-bordered" responsive>
-            <b-thead>
-                <b-row>
-                  <b-col>ID</b-col>
-                  <b-col>First Name</b-col>
-                  <b-col>Last name</b-col>
-                  <b-col>Username</b-col>
-                  <b-col>Mobile Number</b-col>
-                  <b-col>E-mail</b-col>
-                  <b-col>Address</b-col>
-                  <b-col>College</b-col>
-                  <b-col>Action</b-col>
-                </b-row>
+          <b-table-simple hover responsive >
+            <b-thead head-variant="dark">
+                <b-tr>
+                  <b-th>ID</b-th>
+                  <b-th>First Name</b-th>
+                  <b-th>Last name</b-th>
+                  <b-th>Username</b-th>
+                  <b-th>Password</b-th>
+                  <b-th>Mobile Number</b-th>
+                  <b-th>E-mail</b-th>
+                  <b-th>Address</b-th>
+                  <b-th>College</b-th>
+                  <b-th>Action</b-th>
+                </b-tr>
             </b-thead>
             <b-tbody>
-                <b-row v-for="s in students" v-bind:key="s.id">
-                  <b-col>{{s.id}}</b-col>
-                  <b-col>{{s.firstName}}</b-col>
-                  <b-col>{{s.lastName}}</b-col>
-                  <b-col>{{s.username}}</b-col>
-                  <b-col>{{s.mobileNumber}}</b-col>
-                  <b-col>{{s.email}}</b-col>  
-                  <b-col>{{s.address}}</b-col>  
-                  <b-col>{{s.collegeselected}}</b-col>
-                  <b-col>
-                    <span><b-icon icon="pencil-fill" aria-hidden="true" ></b-icon></span>
+                <b-tr v-for="s in students" v-bind:key="s.id">
+                  <b-td>{{s.id}}</b-td>
+                  <b-td>{{s.firstName}}</b-td>
+                  <b-td>{{s.lastName}}</b-td>
+                  <b-td>{{s.username}}</b-td>
+                  <b-td>{{s.password}}</b-td>
+                  <b-td>{{s.mobileNumber}}</b-td>
+                  <b-td>{{s.email}}</b-td>  
+                  <b-td>{{s.address}}</b-td>  
+                  <b-td>{{s.collegeselected}}</b-td>
+                  <b-td>
+                    <span><b-icon icon="pencil-fill" aria-hidden="true" @click="getStudent(s.id)" v-b-modal.editstd></b-icon></span>
                     <span> / </span>
                     <span><b-icon icon="trash-fill" aria-hidden="true" @click="deleteStudent(s.id)"></b-icon></span>                
-                </b-col>             
-                </b-row>     
+                </b-td>             
+                </b-tr>     
               </b-tbody>
-         </b-table-simple>
+         </b-table-simple><br><br><br><br>
       </b-container>
       
             <div class="text-center">
                 <b-button type="button" variant="outline-danger " class="mx-5"><router-link to="/adminlogin"> <span>Back</span> </router-link></b-button>
             </div><br>
+            
+       <!--popup start for Student Register Update--> 
+       <div >
+       <b-modal id="editstd" title="Edit Student" hide-footer>
+          <b-form ref="form">
+          
+            <b-form-group  label="First name:">
+                  <b-form-input   type="text"  v-model="student.firstName">
+                  </b-form-input>   
+            </b-form-group><br>
+            
+            <b-form-group label="Last name:">
+                 <b-form-input  type="text"  v-model="student.lastName">
+                 </b-form-input> 
+            </b-form-group><br>
+            
+            <b-form-group label="Username:">
+                 <b-form-input  type="text"  v-model="student.username">
+                 </b-form-input> 
+            </b-form-group><br>
+             
+            
+            <b-form-group label="Password:" >
+               <b-form-input type="password"  v-model="student.password">
+                </b-form-input>
+            </b-form-group><br>
+            
+         
+            <b-form-group label="Mobile Number:">
+               <b-form-input type="number" v-model="student.mobileNumber">
+               </b-form-input> 
+            </b-form-group><br>
+            
+            <b-form-group label="E-mail:">
+               <b-form-input type="text" v-model="student.email" >
+               </b-form-input>
+            </b-form-group><br>
+            
+            <b-form-group label="Address:"> 
+               <b-form-textarea cols="35" rows="4" v-model="student.address" >
+               </b-form-textarea>
+            </b-form-group><br>
+            
+            <div class="text-center">
+              <b-button variant="outline-success" type="submit" @click="updateStudent()">Update</b-button>
+            </div>
+              
+          
+         </b-form>
+       </b-modal>
+    </div>
+    <!--popup end for Student Register--> 
 
-       <div>  
+       <div class="pt-5" sticky>
          <Footer />
        </div>
    
@@ -70,6 +124,15 @@
   },
     data() {
       return {
+       student: {            
+              firstName: "",
+              lastName: "",
+              username: "",
+              password: "",
+              mobileNumber: "",
+              email: "",
+              address: ""
+            },
         students: '',
       }
     },
@@ -100,7 +163,30 @@
                     reject(err);
                 });
             });              
-        }
+        },
+        getStudent: function(id){
+            return new Promise((resolve, reject) => {
+                StudentService.getStudent(id)
+                .then((response) => {       
+                    this.student = response.data;                 
+                    resolve(response);
+                }).catch((err) => {
+                    reject(err);
+                });
+            });              
+        },
+        updateStudent: function(){           
+        return new Promise((resolve, reject) => {
+            StudentService.updateStudent(this.student)
+                .then(response => {
+                alert ("Student updated successfully!!!!!");
+                    resolve(response);
+                })
+                .catch(err => {
+                    reject(err);
+                });
+        });        
+    }  
         
         
     }
@@ -112,9 +198,15 @@
  
 thead {
   text-align: center;
+  padding: 3px;
   background-color: black;
   color: white;
 }
-
-  
+table {
+ border: 50px;
+}
+a{
+   color: red;
+   text-decoration: none!important;
+   } 
 </style>

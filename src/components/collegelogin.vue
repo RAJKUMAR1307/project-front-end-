@@ -72,7 +72,7 @@
                       This is a wider card with supporting text as a natural lead-in to additional content.
                    
                     </b-card-text>
-                    <b-button href="" variant="primary">Click here</b-button>
+                    <b-button variant="primary" >Click here</b-button>
                   </b-card-body>
                 </b-col>
               </b-row>
@@ -90,7 +90,7 @@
                     This is a wider card with supporting text as a natural lead-in to additional content.
                     
                  </b-card-text>
-                 <b-button href="#" variant="primary"  v-b-modal.modal-4>Click here</b-button>
+                 <b-button href="#" variant="primary" > Click here</b-button>
                </b-card-body>
               </b-col>
               <b-col md="6">
@@ -134,7 +134,7 @@
                       This is a wider card with supporting text as a natural lead-in to additional content.
                      
                    </b-card-text>
-                   <b-button href="" variant="primary">Click here</b-button>
+                   <b-button href="" variant="primary" v-b-modal.fdb>Click here</b-button>
                  </b-card-body>
                 </b-col>
                 <b-col md="6">
@@ -149,11 +149,37 @@
             <div class="text-center">
                 <b-button href="/" type="button" variant="outline-danger " class="mx-5">Logout</b-button>
             </div><br>
+            
+            <!--popup start for Send feedback--> 
+    <div >
+       <b-modal id="fdb" title="Send feedback" hide-footer>
+          <b-form ref="form" >
+            
+            <b-form-group label="College:">
+                  <b-form-input  v-model="feed.college" placeholder="Enter your college">
+                  </b-form-input> 
+            </b-form-group><br>
+            
+            <b-form-group label="Feedback:">
+                  <b-form-textarea cols="55" rows="6" v-model="feed.feedback" placeholder="Enter your feedback (10 - 250 words)">
+                  </b-form-textarea> 
+            </b-form-group><br>
+            
+            <div class="text-center">
+              <b-button type="submit" variant="outline-success" @click="putFeedback()">Submit</b-button>
+              <b-button variant="outline-danger" class="mx-3" >Reset</b-button>
+            </div>
+         </b-form>
+       </b-modal>
+    </div>
+    <!--popup end for Send feedback--> 
+    
         
         
       </b-container>
      </div><br>
      
+    
      
      <div>  
          <Footer />
@@ -166,11 +192,40 @@
 
 import NavBar from './Navbar'
 import Footer from './Footer'
+import FeedbackService from '../service/FeedbackService'
 export default {
   name: 'collegelogin',
   components:{
         NavBar,
         Footer
   },
-  }
+  data(){
+        return{
+            feed: { 
+              college: "",           
+              feedback: ""
+            },
+        }
+    },
+    mounted(){
+     //   this.getAllfeedbacks();
+    },
+   methods:{
+   
+        putFeedback: function(){           
+        return new Promise((resolve, reject) => {
+            FeedbackService.putFeedback(this.feed)
+                .then(response => {
+                alert ("feedback sent successfully!!!!!");
+                    this.feed.college="";
+                    this.feed.feedback="";
+                    resolve(response);
+                })
+                .catch(err => {
+                    reject(err);
+                });
+        });        
+    }          
+    }   
+ }       
 </script>

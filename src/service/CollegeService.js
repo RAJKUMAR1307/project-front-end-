@@ -86,27 +86,26 @@ export default{
                 });
         }); 
     },
-    findByUsernameAndPassword: function(){
-        var ax = axios.create({
-            baseURL: "http://localhost:9090",
-        }); 
-        let config = {
-        headers: {
-         "Content-Type": "application/json"
-            }
-        };
-        
-        return new Promise((resolve, reject) => {
-            ax
-               .post("/college/user", this.clg, config)
-               .then(response => {
-                    resolve(response);
-                })
-                .catch(err => {
-                    reject(err);
-                });
-       
-        });
-    }           
+   // findByUsernameAndPassword: function(clg){
+   //   var ax = axios.create({
+   //         baseURL: "http://localhost:9090",
+   //     }); 
+   //     let config = {
+   //     headers: {
+   //      "Content-Type": "application/json"
+   //         }
+    //    };     
+    //    return new Promise((resolve, reject) => {
+    //        ax
+    //           .post("/college/user", clg, config)
+   //            .then(response => {
+   //                 resolve(response);
+   //            })
+   //             .catch(err => {
+   //                 reject(err);
+   //             });
+   //    
+   //     });
+   // }           
     
 }

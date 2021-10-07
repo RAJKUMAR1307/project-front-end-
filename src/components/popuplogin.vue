@@ -8,14 +8,32 @@
           <b-form ref="form" >
              
              
+             <b-form-group>
+               <b-form-radio-group v-model="selected">
+                 <b-container>
+                   <b-row>  
+                     <b-col>
+                       <b-form-radio v-model="selected" v-bind:value="1" > Admin</b-form-radio>
+                     </b-col>
+                     <b-col>
+                       <b-form-radio v-model="selected" v-bind:value="2"> College</b-form-radio>
+                     </b-col>
+                     <b-col>
+                       <b-form-radio v-model="selected" v-bind:value="3"> Student</b-form-radio>
+                     </b-col>
+                   </b-row>
+                </b-container>
+               </b-form-radio-group>
+              </b-form-group><br>
+             
              
             <b-form-group  label="UserName:" >
-               <b-form-input type="text" v-model="clg.username" placeholder="Enter your Username">
+               <b-form-input type="text" v-model="check.username" placeholder="Enter your Username">
                </b-form-input>
             </b-form-group><br>
             
             <b-form-group  label="Password:">
-               <b-form-input type="password" v-model="clg.password" placeholder="Enter your Password" >
+               <b-form-input type="password" v-model="check.password" placeholder="Enter your Password" >
                </b-form-input>
             </b-form-group><br>
             
@@ -35,7 +53,7 @@
 
 
 <script>
-import CollegeService from '../service/CollegeService'
+import axios from 'axios';
 export default {
  name: "popuplogin",
      components: {
@@ -43,11 +61,11 @@ export default {
        },
     data(){
         return{
-             clg: {
+             check: {
               username: "",
               password: ""
             },
-             
+            selected: "1"
         }
     },
      mounted(){
@@ -55,24 +73,72 @@ export default {
     },
     methods:{
    
-        findByUsernameAndPassword: function(){      
+        findByUsernameAndPassword: function(){ 
+        var ax = axios.create({
+            baseURL: "http://localhost:9090",
+        }); 
+        let config = {
+        headers: {
+         "Content-Type": "application/json"
+            }
+        };     
+        
+        if (this.selected==1){      
         return new Promise((resolve, reject) => {
-            CollegeService.findByUsernameAndPassword(this.clg)
+        ax
+              .post("/admin/user", this.check, config)    
                 .then(response => {
                     alert("login successfully!!");
-                    this.clg.username ="";
-                    this.clg.password ="";
-                    
+                    this.check.username ="";
+                    this.check.password ="";
+                    window.location.replace("/adminlogin");
                     resolve(response);
                 })
                 .catch(err => {
                 alert("login failed");
                     reject(err);
-                });
-       
+                });      
         });
+        }
+        else if (this.selected==2){
+        return new Promise((resolve, reject) => {
+        ax
+              .post("/college/user", this.check, config)    
+                .then(response => {
+                    alert("login successfully!!");
+                    this.check.username ="";
+                    this.check.password ="";
+                    window.location.replace("/collegelogin");
+                    resolve(response);
+                })
+                .catch(err => {
+                alert("login failed");
+                    reject(err);
+                });      
+        });
+        }
+        else if (this.selected==3){   
+        return new Promise((resolve, reject) => {
+        ax
+              .post("/student/user", this.check, config)    
+                .then(response => {
+                    alert("login successfully!!");
+                    this.check.username ="";
+                    this.check.password ="";
+                    window.location.replace("/studentlogin");
+                    resolve(response);
+                })
+                .catch(err => {
+                alert("login failed");
+                    reject(err);
+                });      
+        });
+        }
     }   
   } 
+  
+  
  }
+
 </script>
     

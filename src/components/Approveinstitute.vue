@@ -10,36 +10,36 @@
           <h1>Approve Institute</h1><br><br>
             <b-table-simple  responsive >      
               <b-thead head-variant="dark">
-                <b-row>
-                  <b-col>ID</b-col>
-                  <b-col>College Name</b-col>
-                  <b-col>Username</b-col>
-                  <b-col>Password</b-col>
-                  <b-col>College Phone number</b-col>
-                  <b-col>College postal address</b-col>
-                </b-row>
+                <b-tr>
+                  <b-th>ID</b-th>
+                  <b-th>College Name</b-th>
+                  <b-th>Username</b-th>
+                  <b-th>Password</b-th>
+                  <b-th>College Phone number</b-th>
+                  <b-th>College postal address</b-th>
+                </b-tr>
               </b-thead>
               <b-tbody>
-                <b-row v-for="c in colleges" v-bind:key="c.id">
-                  <b-col>{{c.id}}</b-col>
-                  <b-col>{{c.collegeName}}</b-col>
-                  <b-col>{{c.username}}</b-col>
-                  <b-col>{{c.password}}</b-col>
-                  <b-col>{{c.collegePhoneNumber}}</b-col>
-                  <b-col>{{c.collegePostalAddress}}</b-col>           
-                </b-row>     
+                <b-tr v-for="c in colleges" v-bind:key="c.id">
+                  <b-td>{{c.id}}</b-td>
+                  <b-td>{{c.collegeName}}</b-td>
+                  <b-td>{{c.username}}</b-td>
+                  <b-td>{{c.password}}</b-td>
+                  <b-td>{{c.collegePhoneNumber}}</b-td>
+                  <b-td>{{c.collegePostalAddress}}</b-td>           
+                </b-tr>     
               </b-tbody>
             </b-table-simple><br><br><br><br>
         
             
             <div class="text-center">
-                <b-button type="button" variant="outline-danger" class="mx-5"><router-link to="/adminlogin">Back</router-link></b-button>
+                <b-button type="button" variant="outline-danger" class="mx-5"><router-link to="/adminlogin"> Back </router-link></b-button>
             </div><br>
               
         </b-container>
        </div>
        
-       <div>  
+       <div class="pt-5" sticky>
        <Footer />
      </div>
 </div>
@@ -90,5 +90,11 @@ thead {
   background-color: black;
   color: white;
 }
-  
+table {
+ border: 50px;
+}
+a{
+   color: red;
+   text-decoration: none!important;
+   } 
 </style>
