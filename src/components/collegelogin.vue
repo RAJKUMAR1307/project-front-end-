@@ -90,7 +90,7 @@
                     This is a wider card with supporting text as a natural lead-in to additional content.
                     
                  </b-card-text>
-                 <b-button href="#" variant="primary" > Click here</b-button>
+                 <b-button href="#" variant="primary" v-b-modal.rs> Click here</b-button>
                </b-card-body>
               </b-col>
               <b-col md="6">
@@ -174,7 +174,24 @@
     </div>
     <!--popup end for Send feedback--> 
     
-        
+       <!--popup start for Send Response to student--> 
+    <div >
+       <b-modal id="rs" title="Response" hide-footer>
+          <b-form ref="form" >
+            
+            <b-form-group label="Response:">
+                  <b-form-textarea cols="45" rows="6" v-model="sends.respond" placeholder="Enter your Response">
+                  </b-form-textarea> 
+            </b-form-group><br>
+            
+            <div class="text-center">
+              <b-button type="submit" variant="outline-success" @click="putRespond()">Submit</b-button>
+              <b-button variant="outline-danger" class="mx-3" >Reset</b-button>
+            </div>
+         </b-form>
+       </b-modal>
+    </div>
+    <!--popup end for Send Response to student-->  
         
       </b-container>
      </div><br>
@@ -193,6 +210,7 @@
 import NavBar from './Navbar'
 import Footer from './Footer'
 import FeedbackService from '../service/FeedbackService'
+import RespondService from '../service/RespondService'
 export default {
   name: 'collegelogin',
   components:{
@@ -205,6 +223,9 @@ export default {
               college: "",           
               feedback: ""
             },
+            sends: {
+              respond: ""
+            }, 
         }
     },
     mounted(){
@@ -225,7 +246,20 @@ export default {
                     reject(err);
                 });
         });        
-    }          
+    },
+    putRespond: function(){           
+        return new Promise((resolve, reject) => {
+            RespondService.putRespond(this.sends)
+                .then(response => {
+                alert ("Response sent successfully!!!!!");
+                    this.sends.respond="";
+                    resolve(response);
+                })
+                .catch(err => {
+                    reject(err);
+                });
+        });        
+    }           
     }   
  }       
 </script>

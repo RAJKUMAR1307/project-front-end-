@@ -20,4 +20,24 @@ export default{
                 });
         });
     },
+    putFeedbacks: function(feedbacks){
+        var ax = axios.create({
+            baseURL: "http://localhost:9090",
+        });
+        let config = {
+            headers: {
+                "Content-Type": "application/json"
+            }
+        };
+        return new Promise((resolve, reject) => {
+            ax
+                .post("/stufeedback/insert", feedbacks, config)
+                .then(response => {
+                    resolve(response);
+                })
+                .catch(err => {
+                    reject(err);
+                });
+        });
+    },
 }

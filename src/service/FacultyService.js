@@ -20,6 +20,37 @@ export default{
                 });
         });
     },
+    getAllFacultys: function(){
+        var ax = axios.create({
+            baseURL: "http://localhost:9090",
+        }); 
+        return new Promise((resolve, reject) => {
+            ax({
+                method: 'get',
+                url: '/faculty/getAll',
+            }).then((response) => {                 
+                resolve(response);
+            }).catch((err) => {
+                reject(err);
+            });
+        });                       
+        
+    },
+    deleteFaculty: function(id){
+        var ax = axios.create({
+            baseURL: "http://localhost:9090",
+        }); 
+        return new Promise((resolve, reject) => {
+            ax({
+                method: 'get',
+                url: '/faculty/delete/' + id,
+            }).then((response) => {                     
+                resolve(response);
+            }).catch((err) => {
+                reject(err);
+            });
+        });             
+    },
     getFaculty: function(id){
         var ax = axios.create({
             baseURL: "http://localhost:9090",
