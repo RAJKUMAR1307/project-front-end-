@@ -174,6 +174,7 @@ export default {
   },
   mounted(){
          this.getAllFacultys();
+         this.logout(); 
     },
     methods:{
    
@@ -242,7 +243,11 @@ export default {
                     reject(err);
                 });
         });        
-    }       
+    },
+        
+       logout: function(){                                    
+            localStorage.setItem('status','unverified')
+            }      
               
     }   
  }            

@@ -138,6 +138,7 @@
     },
     mounted(){
         this.getAllStudents();
+        this.logout();
     },
     methods:{
         getAllStudents: function(){
@@ -186,7 +187,10 @@
                     reject(err);
                 });
         });        
-    }  
+    },
+    logout: function(){                                    
+            localStorage.setItem('status','unverified')
+           }  
         
         
     }

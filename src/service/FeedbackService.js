@@ -1,6 +1,6 @@
 import axios from 'axios';
 export default{
-    putFeedback: function(feedback){
+    putFeedback: function(feed){
         var ax = axios.create({
             baseURL: "http://localhost:9090",
         });
@@ -11,7 +11,7 @@ export default{
         };
         return new Promise((resolve, reject) => {
             ax
-                .post("/clgfeedback/insert", feedback, config)
+                .post("/clgfeedback/insert", feed, config)
                 .then(response => {
                     resolve(response);
                 })
@@ -20,7 +20,7 @@ export default{
                 });
         });
     },
-    putFeedbacks: function(feedbacks){
+    putFeedbacks: function(feeds){
         var ax = axios.create({
             baseURL: "http://localhost:9090",
         });
@@ -31,7 +31,7 @@ export default{
         };
         return new Promise((resolve, reject) => {
             ax
-                .post("/stufeedback/insert", feedbacks, config)
+                .post("/stufeedback/insert", feeds, config)
                 .then(response => {
                     resolve(response);
                 })

@@ -1,6 +1,6 @@
 import axios from 'axios';
 export default{
-    putRequest: function(request){
+    putRequest: function(send){
         var ax = axios.create({
             baseURL: "http://localhost:9090",
         });
@@ -11,7 +11,7 @@ export default{
         };
         return new Promise((resolve, reject) => {
             ax
-                .post("/request/insert", request, config)
+                .post("/request/insert", send, config)
                 .then(response => {
                     resolve(response);
                 })

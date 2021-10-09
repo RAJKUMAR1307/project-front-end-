@@ -89,13 +89,18 @@ export default {
               .post("/admin/user", this.check, config)    
                 .then(response => {
                     alert("login successfully!!");
+                    localStorage.setItem('name', this.check.username)
+                    localStorage.setItem('status','verified')
+                    this.$router.push({name:'adminlogin'});
                     this.check.username ="";
                     this.check.password ="";
-                    window.location.replace("/adminlogin");
                     resolve(response);
                 })
                 .catch(err => {
                 alert("login failed");
+                   localStorage.setItem('status','unverified')
+                    this.check.username="",
+                    this.check.password=""
                     reject(err);
                 });      
         });
@@ -106,13 +111,18 @@ export default {
               .post("/college/user", this.check, config)    
                 .then(response => {
                     alert("login successfully!!");
+                    localStorage.setItem('name', this.check.username)
+                    localStorage.setItem('status','verified')
+                    this.$router.push({name:'collegelogin'});
                     this.check.username ="";
                     this.check.password ="";
-                    window.location.replace("/collegelogin");
                     resolve(response);
                 })
                 .catch(err => {
                 alert("login failed");
+                localStorage.setItem('status','unverified')
+                this.check.username="",
+                this.check.password=""
                     reject(err);
                 });      
         });
@@ -123,13 +133,18 @@ export default {
               .post("/student/user", this.check, config)    
                 .then(response => {
                     alert("login successfully!!");
-                    this.check.username ="";
-                    this.check.password ="";
-                    window.location.replace("/studentlogin");
-                    resolve(response);
+                   localStorage.setItem('name', this.check.username)
+                   localStorage.setItem('status','verified')
+                   this.$router.push({name:'studentlogin'});
+                   this.check.username ="";
+                   this.check.password ="";
+                   resolve(response);
                 })
                 .catch(err => {
                 alert("login failed");
+                localStorage.setItem('status','unverified')
+                this.check.username="",
+                this.check.password=""
                     reject(err);
                 });      
         });
