@@ -16,7 +16,13 @@
                   <b-nav-item href="#" v-b-modal.modal-1>Login</b-nav-item>
                   <b-nav-item-dropdown text="Registration">
                      <b-dropdown-item href="#" v-b-modal.modal-2>College Register</b-dropdown-item>
-                     <b-dropdown-item href="#" v-b-modal.modal-3>Student Register</b-dropdown-item> 
+                                  <b-modal id="modal-2" title="College Register" hide-footer>
+                                       <popupClg /> <!-- collegeRegister component -->
+                                  </b-modal>  
+                     <b-dropdown-item href="#" v-b-modal.modal-3>Student Register</b-dropdown-item>
+                                  <b-modal id="modal-3" title="Student Register" hide-footer>
+                                       <popupStu /> <!-- StudentRegister component -->
+                                  </b-modal>  
                   </b-nav-item-dropdown>    
                   <b-nav-item href="Aboutus">About Us</b-nav-item>
                   <b-nav-item href="Contactus">Contact Us</b-nav-item>
@@ -43,16 +49,7 @@
     </div>
     
     
-    
-    
-    <div>
-      <popupClg />
-    </div>
-     
-
-    <div >
-      <popupStu />
-    </div>
+   
   
    </b-container>   
  </div>

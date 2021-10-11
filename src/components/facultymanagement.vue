@@ -40,34 +40,56 @@
        <!--popup start for Add Faculty--> 
     <div >
        <b-modal id="modal-4" title="Add Faculty" hide-footer>
-          <b-form ref="form" >
           
-            <b-form-group label="Faculty name:" >
-                  <b-form-input type="text" v-model="faculty.facultyName" placeholder="Enter your Faculty name">
-                  </b-form-input> 
-            </b-form-group><br>
-            
-            <b-form-group label="Qualification:" >
-                 <b-form-input type="text" v-model="faculty.qualification" placeholder="Enter your Qualification">
+          
+            <div class="form-row">
+              <div class="form-group">
+                <label>Faculty name:</label>
+                 <b-form-input type="text" class="form-control" v-model.trim="$v.faculty.facultyName.$model" :class="{'is-invalid':$v.faculty.facultyName.$error, 'is-valid':!$v.faculty.facultyName.$invalid}" placeholder="Enter your faculty name">        
                  </b-form-input>
-            </b-form-group><br>
-            
-            <b-form-group label="Experience In Years:">
-               <b-form-input type="number" v-model="faculty.experience" placeholder="Enter your Experience" >
+                 <div class="valid-feedback">faculty name is valid!</div>
+                 <div class="invalid-feedback">
+                 <span v-if="!$v.faculty.facultyName.required">faculty is required</span>
+                 </div> 
+              </div><br>
+          
+             <div class="form-group">
+              <label>Qualification:</label>
+               <b-form-input type="text" class="form-control" v-model.trim="$v.faculty.qualification.$model" :class="{'is-invalid':$v.faculty.qualification.$error, 'is-valid':!$v.faculty.qualification.$invalid}" placeholder="Enter your Qualification">        
                </b-form-input>
-            </b-form-group><br>
-            
-            <b-form-group label="Skill set:">
-                <b-form-input type="text" v-model="faculty.skillSet" placeholder="Enter your Skill set" >
-                </b-form-input>
-            </b-form-group><br>
-            
+               <div class="valid-feedback">Qualification is valid!</div>
+               <div class="invalid-feedback">
+               <span v-if="!$v.faculty.qualification.required">Qualification is required</span>
+               </div>
+             </div><br>
+             
+             
+             <div class="form-group">
+             <label>Experience In Years:</label>
+             <input type="number" class="form-control" v-model.number.lazy="$v.faculty.experience.$model" :class="{'is-invalid':$v.faculty.experience.$error, 'is-valid':!$v.faculty.experience.$invalid}" 
+               placeholder="Enter your Experience">
+             
+             <div class="valid-feedback">Experience is valid!</div>
+             <div class="invalid-feedback">
+                <span v-if="!$v.faculty.experience.required">Experience is required</span>
+             </div>
+            </div><br>
+          
+           <div class="form-group">
+              <label>Skill set:</label>
+               <b-form-input type="text" class="form-control" v-model.trim="$v.faculty.skillSet.$model" :class="{'is-invalid':$v.faculty.skillSet.$error, 'is-valid':!$v.faculty.skillSet.$invalid}" placeholder="Enter your skill Set">        
+               </b-form-input>
+               <div class="valid-feedback">skillSet is valid!</div>
+               <div class="invalid-feedback">
+               <span v-if="!$v.faculty.skillSet.required">skillSet is required</span>
+               </div>
+            </div><br>
          
             <div class="text-center">
               <b-button type="submit" variant="outline-success" @click="putFaculty()"> Submit</b-button>
-              <b-button variant="outline-danger" class="mx-3" >Reset</b-button>
+              <b-button variant="outline-danger" class="mx-3" @click="resetForm()">Reset</b-button>
             </div>
-         </b-form>
+         </div>
        </b-modal>
     </div>
     <!--popup end for Add Faculty--> 
@@ -151,7 +173,7 @@
 
 <script>
 
-
+import { required, minLength, maxLength } from "vuelidate/lib/validators";
 import NavBar from './Navbar'
 import Footer from './Footer'
 import FacultyService from '../service/FacultyService'
@@ -172,13 +194,42 @@ export default {
               facultys: "",
         }
   },
+  validations: {
+    faculty: {
+      facultyName: {
+        required,
+        minLength: minLength(4),
+        maxLength: maxLength(20)
+      },
+      qualification: {
+        required,
+        minLength: minLength(2),
+        maxLength: maxLength(30)
+      },
+      experience: {
+       required,
+        minLength: minLength(1),
+        maxLength: maxLength(2),
+      },
+      skillSet: {
+        required,
+        minLength: minLength(3)
+      },
+    }
+  },
   mounted(){
          this.getAllFacultys();
          this.logout(); 
     },
     methods:{
    
-        putFaculty: function(){           
+        putFaculty: function(){ 
+        this.$v.$touch()
+          if(this.$v.$invalid){
+           this.submitstatus = "FAIL"
+          }
+          else {
+           this.submitstatus = "SUCCESS"             
         return new Promise((resolve, reject) => {
             FacultyService.putFaculty(this.faculty)
                 .then(response => {
@@ -187,14 +238,15 @@ export default {
                     this.faculty.qualification ="";
                     this.faculty.experience ="";
                     this.faculty.skillSet ="";
-                    
+                    window.location.reload();
                     
                     resolve(response);
                 })
                 .catch(err => {
                     reject(err);
                 });
-        });        
+        });    
+        }    
     },
     getAllFacultys: function(){
             return new Promise((resolve, reject) => {
@@ -244,9 +296,20 @@ export default {
                 });
         });        
     },
+    resetForm() {
+      this.faculty = {
+      facultyName: null,
+      qualification: null,
+      experience: null,
+      skillSet: null      
+     };
+      this.$nextTick(() => {
+        this.$v.$reset();
+      });
+    },
         
        logout: function(){                                    
-            localStorage.setItem('status','unverified')
+            localStorage.setItem('status','verified')
             }      
               
     }   

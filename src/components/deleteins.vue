@@ -177,7 +177,7 @@ export default {
         });        
     },
     logout: function(){                                    
-            localStorage.setItem('status','unVerified')
+            localStorage.setItem('status','verified')
             }         
         
         

@@ -39,7 +39,7 @@
             
             <div class="text-center">
               <b-button variant="outline-success"  @click="findByUsernameAndPassword()">Submit</b-button>
-              <b-button variant="outline-danger" class="mx-3" >Reset</b-button>
+              <b-button variant="outline-danger" class="mx-3" @click="resetForm()">Reset</b-button>
            </div>
               
          </b-form>
@@ -149,7 +149,17 @@ export default {
                 });      
         });
         }
-    }   
+    },
+    resetForm() {
+      this.check = {
+      username: null,
+      password: null    
+     };
+      this.$nextTick(() => {
+        this.$v.$reset();
+      });
+    },
+       
   } 
   
   

@@ -3,6 +3,7 @@ import VueCookies from 'vue-cookies';
 import App from './App.vue'
 import router from './router'
 import axios from 'axios'
+import Vuelidate from 'vuelidate'
 import VueAxios from 'vue-axios'
 import VueLocalStorage from 'vue-localstorage' 
 Vue.use(VueLocalStorage)
@@ -28,7 +29,7 @@ Vue.use(IconsPlugin)
 
 Vue.config.productionTip = false
 Vue.use(VueAxios, axios)
-
+Vue.use(Vuelidate)
 Vue.use(VueCookies);
 new Vue({
   render: h => h(App),
