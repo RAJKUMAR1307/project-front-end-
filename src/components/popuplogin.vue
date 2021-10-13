@@ -38,7 +38,7 @@
             </b-form-group><br>
             
             <div class="text-center">
-              <b-button variant="outline-success"  @click="findByUsernameAndPassword()">Submit</b-button>
+              <b-button variant="outline-success"  @click="login()">Submit</b-button>
               <b-button variant="outline-danger" class="mx-3" @click="resetForm()">Reset</b-button>
            </div>
               
@@ -53,7 +53,9 @@
 
 
 <script>
-import axios from 'axios';
+import AdminService from '../service/AdminService'
+import CollegeService from '../service/CollegeService'
+import StudentService from '../service/StudentService'
 export default {
  name: "popuplogin",
      components: {
@@ -68,29 +70,17 @@ export default {
             selected: "1"
         }
     },
-     mounted(){
-        // this.getAllColleges();
-    },
     methods:{
    
-        findByUsernameAndPassword: function(){ 
-        var ax = axios.create({
-            baseURL: "http://localhost:9090",
-        }); 
-        let config = {
-        headers: {
-         "Content-Type": "application/json"
-            }
-        };     
-        
+        login: function(){  
         if (this.selected==1){      
         return new Promise((resolve, reject) => {
-        ax
-              .post("/admin/user", this.check, config)    
+         AdminService.loginAdmin(this.check) 
                 .then(response => {
                     alert("login successfully!!");
                     localStorage.setItem('name', this.check.username)
                     localStorage.setItem('status','verified')
+                    localStorage.setItem('role','adminlogin')
                     this.$router.push({name:'adminlogin'});
                     this.check.username ="";
                     this.check.password ="";
@@ -107,12 +97,12 @@ export default {
         }
         else if (this.selected==2){
         return new Promise((resolve, reject) => {
-        ax
-              .post("/college/user", this.check, config)    
+          CollegeService.loginCollege(this.check) 
                 .then(response => {
                     alert("login successfully!!");
                     localStorage.setItem('name', this.check.username)
                     localStorage.setItem('status','verified')
+                    localStorage.setItem('role','collegelogin')
                     this.$router.push({name:'collegelogin'});
                     this.check.username ="";
                     this.check.password ="";
@@ -129,12 +119,12 @@ export default {
         }
         else if (this.selected==3){   
         return new Promise((resolve, reject) => {
-        ax
-              .post("/student/user", this.check, config)    
+        StudentService.loginStudent(this.check)   
                 .then(response => {
                     alert("login successfully!!");
                    localStorage.setItem('name', this.check.username)
                    localStorage.setItem('status','verified')
+                   localStorage.setItem('role','studentlogin')
                    this.$router.push({name:'studentlogin'});
                    this.check.username ="";
                    this.check.password ="";
@@ -156,7 +146,6 @@ export default {
       password: null    
      };
       this.$nextTick(() => {
-        this.$v.$reset();
       });
     },
        

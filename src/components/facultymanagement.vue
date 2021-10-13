@@ -49,7 +49,7 @@
                  </b-form-input>
                  <div class="valid-feedback">faculty name is valid!</div>
                  <div class="invalid-feedback">
-                 <span v-if="!$v.faculty.facultyName.required">faculty is required</span>
+                 <span v-if="!$v.faculty.facultyName.required">faculty name is required</span>
                  </div> 
               </div><br>
           
@@ -79,9 +79,9 @@
               <label>Skill set:</label>
                <b-form-input type="text" class="form-control" v-model.trim="$v.faculty.skillSet.$model" :class="{'is-invalid':$v.faculty.skillSet.$error, 'is-valid':!$v.faculty.skillSet.$invalid}" placeholder="Enter your skill Set">        
                </b-form-input>
-               <div class="valid-feedback">skillSet is valid!</div>
+               <div class="valid-feedback">Skill Set is valid!</div>
                <div class="invalid-feedback">
-               <span v-if="!$v.faculty.skillSet.required">skillSet is required</span>
+               <span v-if="!$v.faculty.skillSet.required">Skill Set is required</span>
                </div>
             </div><br>
          
@@ -219,7 +219,7 @@ export default {
   },
   mounted(){
          this.getAllFacultys();
-         this.logout(); 
+       //  this.logout(); 
     },
     methods:{
    
@@ -308,9 +308,9 @@ export default {
       });
     },
         
-       logout: function(){                                    
-            localStorage.setItem('status','verified')
-            }      
+    //    logout: function(){                                    
+    //         localStorage.setItem('status','verified')
+    //         }      
               
     }   
  }            

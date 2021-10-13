@@ -203,7 +203,7 @@ export default {
         }
     },
     mounted(){
-      this.logout(); 
+    //  this.logout(); 
     },
     methods:{
    
@@ -211,7 +211,7 @@ export default {
         return new Promise((resolve, reject) => {
             FeedbackService.putFeedbacks(this.feeds)
                 .then(response => {
-                alert ("Request sent successfully!!!!!");
+                alert ("Feedback sent successfully!!!!!");
                     this.feeds.studentName="";
                     this.feeds.feedback="";
                     resolve(response);
@@ -235,9 +235,9 @@ export default {
                 });
         });        
     },
-    logout: function(){
-     localStorage.setItem('status','verified')
-     }
+    // logout: function(){
+    //  localStorage.setItem('status','verified')
+    //  }
     
                       
     }   

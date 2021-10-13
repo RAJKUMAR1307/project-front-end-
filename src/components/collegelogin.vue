@@ -116,7 +116,7 @@
                      This is a wider card with  lead-in to additional content.
        
                    </b-card-text>
-                   <b-button href="" variant="primary">Click here</b-button>
+                   <b-button href="" variant="primary" v-b-modal.req>Click here</b-button>
                  </b-card-body>
                 </b-col>
               </b-row>
@@ -192,10 +192,36 @@
        </b-modal>
     </div>
     <!--popup end for Send Response to student-->  
-        
+           
+    <!--popup start for  view request--> 
+    <div >
+       <b-modal id="req" title="Student Requests" hide-footer>
+       <b-container>
+          <b-table-simple hover responsive >
+            <b-thead head-variant="dark">
+                <b-tr>
+                  <b-th>ID</b-th>
+                  <b-th>Student name</b-th>
+                  <b-th>Request</b-th>
+                </b-tr>
+            </b-thead>
+            <b-tbody>
+                <b-tr v-for="r in requests" v-bind:key="r.id">
+                  <b-td>{{r.id}}</b-td>
+                  <b-td>{{r.studentName}}</b-td>
+                  <b-td>{{r.request}}</b-td>            
+                </b-tr>     
+              </b-tbody>
+         </b-table-simple><br><br><br><br> 
+         </b-container> 
+       </b-modal>
+    </div>
+    <!--popup end for view request-->  
+           
       </b-container>
      </div><br>
      
+
     
      
      <div>  
@@ -211,6 +237,7 @@ import NavBar from './Navbar'
 import Footer from './Footer'
 import FeedbackService from '../service/FeedbackService'
 import RespondService from '../service/RespondService'
+import RequestService from '../service/RequestService'
 export default {
   name: 'collegelogin',
   components:{
@@ -226,10 +253,17 @@ export default {
             sends: {
               respond: ""
             }, 
+            send: {
+                id: "",
+              studentName: "",
+              request: ""
+            }, 
+            requests: "",
         }
     },
     mounted(){
-        this.logout();   
+        this.getAllRequests();
+        //this.logout();   
     },
    methods:{
    
@@ -260,9 +294,20 @@ export default {
                 });
         });        
     },
-    logout: function(){
-    localStorage.setItem('status','verified')
-    }           
+    getAllRequests: function(){
+            return new Promise((resolve, reject) => {
+                RequestService.getAllRequests()
+                .then((response) => {                       
+                    this.requests = response.data;             
+                    resolve(response);
+                }).catch((err) => {
+                    reject(err);
+                });
+            });              
+        },
+    // logout: function(){
+    // localStorage.setItem('status','unverified')
+    // }           
     }   
  }       
 </script>

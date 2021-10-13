@@ -58,14 +58,6 @@
         </b-container>
      </div>
      
-     <div>
-       <AboutUs />
-     </div>
-   
-     <div>
-       <ContactUs />
-     </div>
-   
      <div> 
        <Footer />
      </div>
@@ -80,20 +72,19 @@
 
 import NavBar from './Navbar'
 import Footer from './Footer'
-
 export default {
   name: "Home",
   components: {
     NavBar,
-    Footer
-     
+    Footer  
    },
     mounted(){
         this.logout();
     },
-        methods:{  
+         methods:{  
         logout: function(){                                    
-            localStorage.setItem('status','unverified')
+         localStorage.removeItem('status');
+         localStorage.removeItem('role');
             }
         }
 }

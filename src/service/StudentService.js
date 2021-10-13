@@ -84,5 +84,29 @@ export default{
                     reject(err);
                 });
         }); 
+    },
+
+    loginStudent: function(check){
+        var axis = axios.create({
+            baseURL: "http://localhost:9090",
+        });
+        let config = {
+            headers: {
+                "Content-Type": "application/json"
+            }
+        };
+        return new Promise((resolve, reject) => {
+            axis
+                .post("/student/user",check, config)
+                .then(response => {
+               
+                 
+                    resolve(response);
+                })
+                .catch(err => {
+               
+                    reject(err);
+                });
+        }); 
     }
 }

@@ -86,26 +86,29 @@ export default{
                 });
         }); 
     },
-   // findByUsernameAndPassword: function(clg){
-   //   var ax = axios.create({
-   //         baseURL: "http://localhost:9090",
-   //     }); 
-   //     let config = {
-   //     headers: {
-   //      "Content-Type": "application/json"
-   //         }
-    //    };     
-    //    return new Promise((resolve, reject) => {
-    //        ax
-    //           .post("/college/user", clg, config)
-   //            .then(response => {
-   //                 resolve(response);
-   //            })
-   //             .catch(err => {
-   //                 reject(err);
-   //             });
-   //    
-   //     });
-   // }           
+     loginCollege: function(check){
+        var axis = axios.create({
+            baseURL: "http://localhost:9090",
+        });
+        let config = {
+            headers: {
+                "Content-Type": "application/json"
+            }
+        };
+        return new Promise((resolve, reject) => {
+            axis
+                .post("/college/user",check, config)
+                .then(response => {
+               
+                 
+                    resolve(response);
+                })
+                .catch(err => {
+               
+                    reject(err);
+                });
+        }); 
+    
+    }  
     
 }

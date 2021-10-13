@@ -138,7 +138,6 @@
     },
     mounted(){
         this.getAllStudents();
-        this.logout();
     },
     methods:{
         getAllStudents: function(){
@@ -188,11 +187,9 @@
                 });
         });        
     },
-    logout: function(){                                    
-            localStorage.setItem('status','verified')
-           }  
-        
-        
+    // logout: function(){                                    
+    //         localStorage.setItem('status','verified')
+    //        }
     }
   }
 
